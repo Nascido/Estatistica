@@ -13,7 +13,15 @@ colnames(tabela_freq_media_experiencia) <- c("Experiência","Frequência","Porce
 tabela_freq_media_experiencia
 write.table(tabela_freq_media_experiencia,"tabela_media_freq_experiencia.csv", sep=";", dec=",", row.names=FALSE)
 
+library(ggplot2)
+ggplot(dados, aes(x=experiencia)) +
+  geom_bar(fill="darkgrey") +
+  ylabs(x="Experiência", y="Contagem")
+
 # 4
+ggplot(dados, aes(x=experiencia, fill=trab_remoto)) +
+  geom_bar(position="fill") +
+  labs(x="Experiência", y="Porcentagem")
 
 # 5
 tabela_experiencia_salario <- aggregate(dados$salario_USD, by=list(dados$experiencia), FUN="mean")
