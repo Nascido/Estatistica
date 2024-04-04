@@ -26,10 +26,6 @@ ggplot(dados, aes(x=experiencia, fill=trab_remoto)) +
 
 table(dados$trab_remoto)
 
-ggplot(dados, aes(x=Sexo, fill=Gosta_Est)) + 
-  geom_bar(position="fill") +
-  ylab("Porcentagem")
-
 # 5
 tabela_experiencia_salario <- aggregate(dados$salario_USD, by=list(dados$experiencia), FUN="mean")
 colnames(tabela_experiencia_salario) <- c("Salário","Média")
