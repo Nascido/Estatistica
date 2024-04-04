@@ -4,6 +4,7 @@ dados = read.csv2("dados_salarios.csv", dec=".")
 library(dplyr)
 dados$trab_remoto = case_match(dados$trab_remoto, 0 ~ "Não", 50 ~ "Parcial", 100 ~ "Sim")
 
+write.table(dados,"dados_modif.csv", sep=";", dec=".", row.names=FALSE)
 # 3
 tabela_experiencia = table(dados$experiencia, useNA = "ifany")
 tabela_media_experiencia = round(prop.table(tabela_experiencia)*100,1)
@@ -16,12 +17,18 @@ write.table(tabela_freq_media_experiencia,"tabela_media_freq_experiencia.csv", s
 library(ggplot2)
 ggplot(dados, aes(x=experiencia)) +
   geom_bar(fill="darkgrey") +
-  ylabs(x="Experiência", y="Contagem")
+  labs(x="Experiência", y="Contagem")
 
 # 4
 ggplot(dados, aes(x=experiencia, fill=trab_remoto)) +
   geom_bar(position="fill") +
   labs(x="Experiência", y="Porcentagem")
+
+table(dados$trab_remoto)
+
+ggplot(dados, aes(x=Sexo, fill=Gosta_Est)) + 
+  geom_bar(position="fill") +
+  ylab("Porcentagem")
 
 # 5
 tabela_experiencia_salario <- aggregate(dados$salario_USD, by=list(dados$experiencia), FUN="mean")
