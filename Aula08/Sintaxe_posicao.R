@@ -19,4 +19,3 @@ library(ggplot2)
 ggplot(base, aes(Sexo, IMC)) +
   geom_bar(position='dodge', fill="white", color="blue", stat='summary', fun='mean')
 
-
