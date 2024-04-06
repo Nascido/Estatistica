@@ -4,7 +4,7 @@ names(dados)
 str(dados)
 
 # CALCULAR A ALTURA MEDIA
-
+media_altura = mean(dados$Altura)
 
 # RECLASSIFICAR VARIAVEL
 library(dplyr)
