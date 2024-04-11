@@ -12,12 +12,14 @@ library(psych)
 result2 <- describeBy(IMC~Sexo, data=base, mat=T)
 result2 <- result2[,c(2,4,5,6)]
 result2
+
 # incluir o cálculo do coeficiente de variação na tabela result2
+result2$cv = result2$sd/result2$mean*100
 
 
 # ANALISE COM O PACOTE DOBY
 library(doBy)
-result3 <- summaryBy(IMC ~ Sexo, data = base,
+result3 <- summaryBy(IMC ~ Sexo*Cursinho, data = base,
                      FUN = function(x) { c(n = length(x), m = mean(x), s = sd(x), cv = sd(x)/mean(x)*100) } )
 result3
 # refazer os resultados "result3" incluindo mais uma variavel qualitativa "Cursinho"
