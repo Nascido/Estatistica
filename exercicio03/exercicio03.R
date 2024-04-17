@@ -1,5 +1,5 @@
 #0 Leitura da base de dados
-dados <- read.csv2("mobile.cvs", dec=".")
+dados <- read.csv2("mobile.csv", dec=".")
 
 ###########################################################################################
 #1 Calcule a média, desvio padrão e coeficiente de variação para as seguintes variáveis: ##
