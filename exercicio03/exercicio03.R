@@ -13,6 +13,11 @@ cof_var <- function(values){
   return(100*sd(values)/mean(values))
 }
 
+## Mudança de valores de variáveis para melhor interpretação
+amostra$touch_screen = case_match(amostra$touch_screen, 0~"Sem Touch", 1~"Com Touch")
+amostra$blue = case_match(amostra$blue, 0~"Sem Bluetooth", 1~"Com Bluetooth")
+
+
 ###########################################################################################
 #1 Calcule a média, desvio padrão e coeficiente de variação para as seguintes variáveis: ##
 ###########################################################################################
@@ -37,10 +42,6 @@ by(amostra$int_memory, amostra$blue, cof_var)
 ###########################################################################################
 #2 Faça os gráficos de caixa das análises dos itens 1a, 1b, 1c e tire conclusões. #########
 ###########################################################################################
-
-## Mudança de valores de variáveis para melhor interpretação
-amostra$touch_screen = case_match(amostra$touch_screen, 0~"Sem Touch", 1~"Com Touch")
-amostra$blue = case_match(amostra$blue, 0~"Sem Bluetooth", 1~"Com Bluetooth")
 
 ## (a)  Gráfico de Caixa: “battery_power” x “touch_screen”;
 boxplot(battery_power~touch_screen,
