@@ -1,16 +1,20 @@
 #0 Leitura da base de dados e amostra aleatória simples de 600 celulares
 dados <- read.csv2("mobile.csv", dec=".")
 
-library("dplyr")
+library(dplyr)
+library(doBy)
 
 set.seed("12345")
 tam_amostra = 600
 
 amostra = sample_n(dados, tam_amostra)
 
-## Função para cálculo do coeficiente de variação
+## Fuções para cálculo da média, desvio padrão e coeficiente de variação
 cof_var <- function(values){
   return(100*sd(values)/mean(values))
+}
+questao01 <- function(x){
+  c(media=mean(x), desvio=sd(x), cof=cof_var(x))
 }
 
 ## Mudança de valores de variáveis para melhor interpretação
@@ -23,20 +27,16 @@ amostra$blue = case_match(amostra$blue, 0~"Sem Bluetooth", 1~"Com Bluetooth")
 ###########################################################################################
 
 ## (a)  “battery_power”, em função das categorias da variável “touch_screen”;
-by(amostra$battery_power, amostra$touch_screen, mean)
-by(amostra$battery_power, amostra$touch_screen, sd)
-by(amostra$battery_power, amostra$touch_screen, cof_var)
+resultA = summaryBy(battery_power ~ touch_screen, data=amostra, FUN = questao01)
+resultA
 
 ## (b)  “m_dep”, em função das categorias da variável “touch_screen”;
-by(amostra$m_dep, amostra$touch_screen, mean)
-by(amostra$m_dep, amostra$touch_screen, sd)
-by(amostra$m_dep, amostra$touch_screen, cof_var)
-
+resultB = summaryBy(m_dep ~ touch_screen, data=amostra, FUN = questao01)
+resultB
 
 ## (c)  “int_memory”, em função das categorias da variável “blue”.
-by(amostra$int_memory, amostra$blue, mean)
-by(amostra$int_memory, amostra$blue, sd)
-by(amostra$int_memory, amostra$blue, cof_var)
+resultC = summaryBy(int_memory ~ blue, data=amostra, FUN = questao01)
+resultC
 
 
 ###########################################################################################
