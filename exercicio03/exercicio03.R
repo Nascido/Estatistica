@@ -70,3 +70,4 @@ boxplot(int_memory~blue,
         ylab = "Memória Interna ( GB )",
         col  = c("lightblue","lightyellow"),
         ylim = c(0,70))
+
