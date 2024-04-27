@@ -5,7 +5,7 @@ library(dplyr)
 #00 Leitura e Tratamento de dados
 stroke_data <- read_csv("healthcare-dataset-stroke-data.csv")
 
-# Exclusão de Oojeto na Base de Dados
+# Exclusão de objeto na Base de Dados
 stroke_data = stroke_data[stroke_data$gender!="Other",]
 
 # Mudança de status das variáveis
@@ -18,7 +18,10 @@ stroke_data$gender = case_match(stroke_data$gender, "Female"~"Feminino", "Male"~
 stroke_data$smoking_status = case_match(stroke_data$smoking_status, "formerly smoked"~"Fumou",
                                         "never smoked"~"Nunca Fumou",
                                         "smokes"~"Fuma", "Unknown"~"S/ info")
+# Remoção da Coluna work_type
+stroke_data = select(stroke_data, -work_type)
 
+# Mudança de tipagem da variavel bmi
 
 ## Fuções para cálculo da média, desvio padrão e coeficiente de variação
 cof_var <- function(values){
