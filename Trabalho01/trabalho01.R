@@ -1,14 +1,19 @@
+
 library(readr)
 library(doBy)
 library(dplyr)
 
-#00 Leitura e Tratamento de dados
+################################################################################
+##00 Tratamento de Dados #######################################################
+################################################################################
+
+#Leitura da Base de Dados
 stroke_data <- read_csv("healthcare-dataset-stroke-data.csv")
 
-# Exclusão de objeto na Base de Dados
+#Exclusão de objeto na Base de Dados
 stroke_data = stroke_data[stroke_data$gender!="Other",]
 
-# Mudança de status das variáveis
+#Mudança de status das variáveis
 stroke_data$hypertension = case_match(stroke_data$hypertension, 0~"Não", 1~"Sim")
 stroke_data$heart_disease = case_match(stroke_data$heart_disease, 0~"Não", 1~"Sim")
 stroke_data$ever_married = case_match(stroke_data$ever_married, "No"~"Não", "Yes"~"Sim")
@@ -18,10 +23,24 @@ stroke_data$gender = case_match(stroke_data$gender, "Female"~"Feminino", "Male"~
 stroke_data$smoking_status = case_match(stroke_data$smoking_status, "formerly smoked"~"Fumou",
                                         "never smoked"~"Nunca Fumou",
                                         "smokes"~"Fuma", "Unknown"~"S/ info")
-# Remoção da Coluna work_type
+
+
+#Remoção da Coluna work_type
 stroke_data = select(stroke_data, -work_type)
 
-# Mudança de tipagem da variavel bmi
+#Mudança de tipagem da variavel bmi - chr --> float
+stroke_data = stroke_data %>%
+  mutate(imc = case_when(bmi == "N/A" ~ -1, 
+                         .default = as.numeric(bmi)))
+
+stroke_data = select(stroke_data, -bmi)
+
+
+################################################################################
+##01 Análise dos Dados #########################################################
+################################################################################
+
+
 
 ## Fuções para cálculo da média, desvio padrão e coeficiente de variação
 cof_var <- function(values){
