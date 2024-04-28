@@ -40,3 +40,7 @@ stroke_data = select(stroke_data, -bmi)
 ##01 Análise de Dados ##########################################################
 ################################################################################
 
+#Cálculo medidas de resumo
+summary(stroke_data$age)
+summary(stroke_data$avg_glucose_level)
+summary(stroke_data$imc[stroke_data$imc != -1])
