@@ -40,3 +40,55 @@ stroke_data = select(stroke_data, -bmi)
 ##01 Análise de Dados ##########################################################
 ################################################################################
 
+#Gráficos
+#Gênero
+library(ggplot2)
+ggplot(stroke_data, aes(x=gender)) +
+  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
+  labs(x="Gênero", y="Contagem")
+
+#Idade
+ggplot(stroke_data, aes(x=age)) +
+  geom_histogram(binwidth=1, alpha=0.7,  color="blue", fill="lightblue") + 
+  labs(x="Idade", y="Contagem")
+
+#Hipertensão
+ggplot(stroke_data, aes(x=hypertension)) +
+  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
+  labs(x="Tem hipertensão", y="Contagem")
+
+#Problema de coração
+ggplot(stroke_data, aes(x=heart_disease)) +
+  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
+  labs(x="Tem problema de coração", y="Contagem")
+
+#Já foi casado(a)
+ggplot(stroke_data, aes(x=ever_married)) +
+  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
+  labs(x="Já foi casado(a)", y="Contagem")
+
+#Tipo de residência
+ggplot(stroke_data, aes(x=Residence_type)) +
+  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
+  labs(x="Tipo de residência", y="Contagem")
+
+#Nível médio de glicose
+ggplot(stroke_data, aes(x=avg_glucose_level)) +
+  geom_histogram(binwidth=5, alpha=0.7,  color="blue", fill="lightblue") + 
+  labs(x="Nível de glicose médio", y="Contagem")
+
+#Status de fumante
+ggplot(stroke_data, aes(x=smoking_status)) +
+  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
+  labs(x="Status de fumante", y="Contagem")
+
+#AVC
+ggplot(stroke_data, aes(x=stroke)) +
+  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
+  labs(x="Teve AVC", y="Contagem")
+
+#IMC
+ggplot(stroke_data, aes(x=imc)) +
+  geom_histogram(binwidth=1, alpha=0.7,  color="blue", fill="lightblue") + 
+  labs(x="IMC", y="Contagem")
+
