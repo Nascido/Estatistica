@@ -16,8 +16,6 @@ stroke_data = stroke_data[stroke_data$gender!="Other",]
 ## Mudança de status das variáveis
 stroke_data$hypertension = case_match(stroke_data$hypertension, 0~"Não", 1~"Sim")
 stroke_data$heart_disease = case_match(stroke_data$heart_disease, 0~"Não", 1~"Sim")
-stroke_data$ever_married = case_match(stroke_data$ever_married, "No"~"Não", "Yes"~"Sim")
-stroke_data$Residence_type = case_match(stroke_data$Residence_type, "Urban"~"Urbano", "Rural"~"Rural")
 stroke_data$stroke = case_match(stroke_data$stroke, 0~"Não", 1~"Sim")
 stroke_data$gender = case_match(stroke_data$gender, "Female"~"Feminino", "Male"~"Masculino")
 stroke_data$smoking_status = case_match(stroke_data$smoking_status, "formerly smoked"~"Fumou",
@@ -153,7 +151,7 @@ ggplot(stroke_data, aes(x=heart_disease)) +
 ggplot(stroke_data, aes(x=heart_disease, fill=stroke)) + 
   geom_bar(position="fill") +
   xlab("Problema de coração") +
-  ylab("Porcentagem")
+  ylab("Porcentagem") 
 
 ## Nível médio de glicose
 ggplot(stroke_data, aes(x=avg_glucose_level)) +
