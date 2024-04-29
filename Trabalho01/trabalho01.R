@@ -59,32 +59,44 @@ two_var_table <- function(var1, var2, name1, name2){
   
   return(tabela)
 }
+
+stroke_var_table <- function(data_var, name_var){
+  ftabela = table(data_var, stroke_data$stroke, useNA = "ifany") 
+  ptabela = round(prop.table(ftabela,1)*100,1)
+  tabela = data.frame(ftabela,ptabela)
+  tabela = tabela[,-c(4,5)]
+  colnames(tabela) <- c(name_var,"AVC","Frequencia","Porcentagem")
+  
+  return(tabela)
+}
+
+
 ################################################################################
 # TABELAS PARA VARIAVEIS QUALITATIVAS:
 
 ## Variavel Sexo:
 tabela_gender = one_var_table(stroke_data$gender, "Sexo")
-tabela_gender_stroke = two_var_table(stroke_data$gender, stroke_data$stroke, "Sexo", "AVC")
+tabela_gender_stroke = stroke_var_table(stroke_data$gender, "Sexo")
 
 ## Variável Hipertensão
 tabela_hypertension = one_var_table(stroke_data$hypertension, "Hipertensão")
-tabela_hypertension_stroke = two_var_table(stroke_data$hypertension, stroke_data$stroke, "Hipertensão", "AVC")
+tabela_hypertension_stroke = stroke_var_table(stroke_data$hypertension, "Hipertensão")
 
 ## Variável Problema no Coração
 tabela_heart = one_var_table(stroke_data$heart_disease, "Cardiaco")
-tabela_heart_stroke = two_var_table(stroke_data$heart_disease, stroke_data$stroke, "Cardiaco", "AVC")
+tabela_heart_stroke = stroke_var_table(stroke_data$heart_disease, "Cardiaco")
 
 ## Variável Casado
 tabela_married = one_var_table(stroke_data$ever_married, "Casado")
-tabela_married_stroke = two_var_table(stroke_data$ever_married, stroke_data$stroke, "Casado", "AVC")
+tabela_married_stroke = stroke_var_table(stroke_data$ever_married, "Casado")
 
 ## Variável Residencia
 tabela_residence = one_var_table(stroke_data$Residence_type, "Residencia")
-tabela_residence_stroke = two_var_table(stroke_data$Residence_type, stroke_data$stroke, "Residencia", "AVC")
+tabela_residence_stroke =  stroke_var_table(stroke_data$Residence_type, "Residencia")
 
 ## Variavel Fumante
 tabela_smoke = one_var_table(stroke_data$smoking_status, "Cigarro")
-tabela_smoke = two_var_table(stroke_data$smoking_status, stroke_data$stroke, "Cigarro", "AVC")
+tabela_smoke_stroke = stroke_var_table(stroke_data$smoking_status, "Cigarro")
 
 ## Variavel AVC
 tabela_stroke = one_var_table(stroke_data$stroke, "AVC")
