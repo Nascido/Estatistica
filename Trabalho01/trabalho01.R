@@ -25,8 +25,10 @@ stroke_data$smoking_status = case_match(stroke_data$smoking_status, "formerly sm
                                         "smokes"~"Fuma", "Unknown"~"S/ info")
 
 
-## Remoção da Coluna work_type
+## Remoção de Colunas não usadas
 stroke_data = select(stroke_data, -work_type)
+stroke_data = select(stroke_data, -ever_married)
+stroke_data = select(stroke_data, -Residence_type)
 
 ## Mudança de tipagem da variavel bmi - chr --> float
 stroke_data = stroke_data %>%
@@ -86,14 +88,6 @@ tabela_hypertension_stroke = stroke_var_table(stroke_data$hypertension, "Hiperte
 ## Problema no Coração
 tabela_heart = one_var_table(stroke_data$heart_disease, "Cardiaco")
 tabela_heart_stroke = stroke_var_table(stroke_data$heart_disease, "Cardiaco")
-
-## Casado
-tabela_married = one_var_table(stroke_data$ever_married, "Casado")
-tabela_married_stroke = stroke_var_table(stroke_data$ever_married, "Casado")
-
-## Residencia
-tabela_residence = one_var_table(stroke_data$Residence_type, "Residencia")
-tabela_residence_stroke =  stroke_var_table(stroke_data$Residence_type, "Residencia")
 
 ## Fumante
 tabela_smoke = one_var_table(stroke_data$smoking_status, "Cigarro")
@@ -159,26 +153,6 @@ ggplot(stroke_data, aes(x=heart_disease)) +
 ggplot(stroke_data, aes(x=heart_disease, fill=stroke)) + 
   geom_bar(position="fill") +
   xlab("Problema de coração") +
-  ylab("Porcentagem")
-
-## Já foi casado(a)
-ggplot(stroke_data, aes(x=ever_married)) +
-  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
-  labs(x="Já foi casado(a)", y="Contagem")
-
-ggplot(stroke_data, aes(x=ever_married, fill=stroke)) + 
-  geom_bar(position="fill") +
-  xlab("Já foi casado") +
-  ylab("Porcentagem")
-
-## Tipo de residência
-ggplot(stroke_data, aes(x=Residence_type)) +
-  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
-  labs(x="Tipo de residência", y="Contagem")
-
-ggplot(stroke_data, aes(x=Residence_type, fill=stroke)) + 
-  geom_bar(position="fill") +
-  xlab("Tipo de residência") +
   ylab("Porcentagem")
 
 ## Nível médio de glicose
