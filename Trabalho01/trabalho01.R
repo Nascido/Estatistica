@@ -82,22 +82,31 @@ stroke_var_table <- function(data_var, name_var){
 ## Gênero:
 tabela_gender = one_var_table(stroke_data$gender, "Gênero")
 tabela_gender_stroke = stroke_var_table(stroke_data$gender, "Gênero")
-write.table(tabela_gender,"tabela_gender.xlsx", sep=";", dec=",", row.names=TRUE)
+write.table(tabela_gender,"tabela_gender.csv", sep=";", dec=",", row.names=TRUE)
+write.table(tabela_gender_stroke,"tabela_gender_stroke.csv", sep=";", dec=",", row.names=TRUE)
 
 ## Hipertensão
 tabela_hypertension = one_var_table(stroke_data$hypertension, "Hipertensão")
 tabela_hypertension_stroke = stroke_var_table(stroke_data$hypertension, "Hipertensão")
+write.table(tabela_hypertension,"tabela_hypertension.csv", sep=";", dec=",", row.names=TRUE)
+write.table(tabela_hypertension_stroke,"tabela_hypertension_stroke.csv", sep=";", dec=",", row.names=TRUE)
 
 ## Problema no Coração
 tabela_heart = one_var_table(stroke_data$heart_disease, "Cardiaco")
 tabela_heart_stroke = stroke_var_table(stroke_data$heart_disease, "Cardiaco")
+write.table(tabela_heart,"tabela_heart.csv", sep=";", dec=",", row.names=TRUE)
+write.table(tabela_heart_stroke,"tabela_heart_stroke.csv", sep=";", dec=",", row.names=TRUE)
 
 ## Fumante
 tabela_smoke = one_var_table(stroke_data$smoking_status, "Cigarro")
 tabela_smoke_stroke = stroke_var_table(stroke_data$smoking_status, "Cigarro")
+write.table(tabela_smoke,"tabela_smoke.csv", sep=";", dec=",", row.names=TRUE)
+write.table(tabela_smoke_stroke,"tabela_smoke_stroke.csv", sep=";", dec=",", row.names=TRUE)
+
 
 ## AVC
 tabela_stroke = one_var_table(stroke_data$stroke, "AVC")
+write.table(tabela_stroke,"tabela_stroke.csv", sep=";", dec=",", row.names=TRUE)
 
 #################################################################################
 # MEDIDAS DE RESUMO PARA QUANTITATIVAS:
