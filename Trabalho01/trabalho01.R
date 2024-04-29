@@ -7,13 +7,13 @@ library(dplyr)
 ##00 Tratamento de Dados #######################################################
 ################################################################################
 
-#Leitura da Base de Dados
+## Leitura da Base de Dados
 stroke_data <- read_csv("healthcare-dataset-stroke-data.csv")
 
-#Exclusão de objeto na Base de Dados
+## Exclusão de objeto na Base de Dados
 stroke_data = stroke_data[stroke_data$gender!="Other",]
 
-#Mudança de status das variáveis
+## Mudança de status das variáveis
 stroke_data$hypertension = case_match(stroke_data$hypertension, 0~"Não", 1~"Sim")
 stroke_data$heart_disease = case_match(stroke_data$heart_disease, 0~"Não", 1~"Sim")
 stroke_data$ever_married = case_match(stroke_data$ever_married, "No"~"Não", "Yes"~"Sim")
@@ -25,10 +25,10 @@ stroke_data$smoking_status = case_match(stroke_data$smoking_status, "formerly sm
                                         "smokes"~"Fuma", "Unknown"~"S/ info")
 
 
-#Remoção da Coluna work_type
+## Remoção da Coluna work_type
 stroke_data = select(stroke_data, -work_type)
 
-#Mudança de tipagem da variavel bmi - chr --> float
+## Mudança de tipagem da variavel bmi - chr --> float
 stroke_data = stroke_data %>%
   mutate(imc = case_when(bmi == "N/A" ~ -1, 
                          .default = as.numeric(bmi)))
@@ -43,6 +43,7 @@ stroke_data = select(stroke_data, -bmi)
 ################################################################################
 # Funções Úteis Criadas
 
+## Criação de uma Tabela de apenas uma variável
 one_var_table <- function(data_var, name_var){
   ftabela = table(data_var, useNA = "ifany") 
   ptabela = round(prop.table(ftabela)*100,1)
@@ -53,6 +54,7 @@ one_var_table <- function(data_var, name_var){
   return(tabela)
 }
 
+## Criação de uma Tabela de duas variáveis
 two_var_table <- function(var1, var2, name1, name2){
   ftabela = table(var1, var2, useNA = "ifany") 
   ptabela = round(prop.table(ftabela,1)*100,1)
@@ -63,6 +65,7 @@ two_var_table <- function(var1, var2, name1, name2){
   return(tabela)
 }
 
+## Criação de uma Tabela relacionando uma variável à variável AVC
 stroke_var_table <- function(data_var, name_var){
   tabela = two_var_table(data_var, stroke_data$stroke, name_var, "AVC")
   return(tabela)
