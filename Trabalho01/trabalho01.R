@@ -120,40 +120,86 @@ ggplot(stroke_data, aes(x=gender)) +
   geom_bar(fill="lightblue", color="blue", alpha=0.8) +
   labs(x="Gênero", y="Contagem")
 
+ggplot(stroke_data, aes(x=gender, fill=stroke)) + 
+  geom_bar(position="fill") +
+  xlab("Gênero") +
+  ylab("Porcentagem")
+
 ## Idade
 ggplot(stroke_data, aes(x=age)) +
   geom_histogram(binwidth=1, alpha=0.7,  color="blue", fill="lightblue") + 
   labs(x="Idade", y="Contagem")
+
+boxplot(age~stroke,
+        data = stroke_data,
+        main = "AVC em relação a idade",
+        xlab = "Idade",
+        ylab = "AVC",
+        col  = c("lightblue","lightyellow"),
+        ylim = c(0,100))
 
 ## Hipertensão
 ggplot(stroke_data, aes(x=hypertension)) +
   geom_bar(fill="lightblue", color="blue", alpha=0.8) +
   labs(x="Tem hipertensão", y="Contagem")
 
+ggplot(stroke_data, aes(x=hypertension, fill=stroke)) + 
+  geom_bar(position="fill") +
+  xlab("Hipertensão") +
+  ylab("Porcentagem")
+
 ## Problema de coração
 ggplot(stroke_data, aes(x=heart_disease)) +
   geom_bar(fill="lightblue", color="blue", alpha=0.8) +
   labs(x="Tem problema de coração", y="Contagem")
+
+ggplot(stroke_data, aes(x=heart_disease, fill=stroke)) + 
+  geom_bar(position="fill") +
+  xlab("Problema de coração") +
+  ylab("Porcentagem")
 
 ## Já foi casado(a)
 ggplot(stroke_data, aes(x=ever_married)) +
   geom_bar(fill="lightblue", color="blue", alpha=0.8) +
   labs(x="Já foi casado(a)", y="Contagem")
 
+ggplot(stroke_data, aes(x=ever_married, fill=stroke)) + 
+  geom_bar(position="fill") +
+  xlab("Já foi casado") +
+  ylab("Porcentagem")
+
 ## Tipo de residência
 ggplot(stroke_data, aes(x=Residence_type)) +
   geom_bar(fill="lightblue", color="blue", alpha=0.8) +
   labs(x="Tipo de residência", y="Contagem")
+
+ggplot(stroke_data, aes(x=Residence_type, fill=stroke)) + 
+  geom_bar(position="fill") +
+  xlab("Tipo de residência") +
+  ylab("Porcentagem")
 
 ## Nível médio de glicose
 ggplot(stroke_data, aes(x=avg_glucose_level)) +
   geom_histogram(binwidth=5, alpha=0.7,  color="blue", fill="lightblue") + 
   labs(x="Nível de glicose médio", y="Contagem")
 
+boxplot(avg_glucose_level~stroke,
+        data = stroke_data,
+        main = "AVC em relação ao nível de médio de glicose",
+        xlab = "Nível médio de glicose ",
+        ylab = "AVC",
+        col  = c("lightblue","lightyellow"),
+        ylim = c(0,300))
+
 ## Status de fumante
 ggplot(stroke_data, aes(x=smoking_status)) +
   geom_bar(fill="lightblue", color="blue", alpha=0.8) +
   labs(x="Status de fumante", y="Contagem")
+
+ggplot(stroke_data, aes(x=smoking_status, fill=stroke)) + 
+  geom_bar(position="fill") +
+  xlab("Status de fumante") +
+  ylab("Porcentagem")
 
 ## AVC
 ggplot(stroke_data, aes(x=stroke)) +
@@ -165,4 +211,11 @@ ggplot(stroke_data, aes(x=imc)) +
   geom_histogram(binwidth=1, alpha=0.7,  color="blue", fill="lightblue") + 
   labs(x="IMC", y="Contagem")
 
-
+stroke_data_filtered = stroke_data[stroke_data$imc != -1,]
+boxplot(imc~stroke,
+        data = stroke_data_filtered,
+        main = "AVC em relação ao IMC",
+        xlab = "Nível médio de glicose ",
+        ylab = "IMC",
+        col  = c("lightblue","lightyellow"),
+        ylim = c(0,100))
