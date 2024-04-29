@@ -61,12 +61,7 @@ two_var_table <- function(var1, var2, name1, name2){
 }
 
 stroke_var_table <- function(data_var, name_var){
-  ftabela = table(data_var, stroke_data$stroke, useNA = "ifany") 
-  ptabela = round(prop.table(ftabela,1)*100,1)
-  tabela = data.frame(ftabela,ptabela)
-  tabela = tabela[,-c(4,5)]
-  colnames(tabela) <- c(name_var,"AVC","Frequencia","Porcentagem")
-  
+  tabela = two_var_table(data_var, stroke_data$stroke, name_var, "AVC")
   return(tabela)
 }
 
