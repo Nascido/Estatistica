@@ -51,6 +51,8 @@ one_var_table <- function(data_var, name_var){
   tabela = tabela[,-3]
   colnames(tabela) <- c(name_var,"Frequencia","Porcentagem")
   
+  print(tabela)
+  
   return(tabela)
 }
 
@@ -68,6 +70,9 @@ two_var_table <- function(var1, var2, name1, name2){
 ## Criação de uma Tabela relacionando uma variável à variável AVC
 stroke_var_table <- function(data_var, name_var){
   tabela = two_var_table(data_var, stroke_data$stroke, name_var, "AVC")
+  
+  print(tabela)
+  
   return(tabela)
 }
 
