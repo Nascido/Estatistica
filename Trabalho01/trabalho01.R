@@ -82,7 +82,7 @@ stroke_var_table <- function(data_var, name_var){
 ## Gênero:
 tabela_gender = one_var_table(stroke_data$gender, "Gênero")
 tabela_gender_stroke = stroke_var_table(stroke_data$gender, "Gênero")
-write.table(tabela_gender,"tabela_gender.xls", sep=";", dec=",", row.names=TRUE)
+write.table(tabela_gender,"tabela_gender.xlsx", sep=";", dec=",", row.names=TRUE)
 
 ## Hipertensão
 tabela_hypertension = one_var_table(stroke_data$hypertension, "Hipertensão")
