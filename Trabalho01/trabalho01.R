@@ -40,6 +40,9 @@ stroke_data = select(stroke_data, -bmi)
 ##01 Análise de Dados ##########################################################
 ################################################################################
 
+################################################################################
+# Funções Úteis Criadas
+
 one_var_table <- function(data_var, name_var){
   ftabela = table(data_var, useNA = "ifany") 
   ptabela = round(prop.table(ftabela)*100,1)
@@ -96,3 +99,14 @@ tabela_smoke_stroke = stroke_var_table(stroke_data$smoking_status, "Cigarro")
 ## Variavel AVC
 tabela_stroke = one_var_table(stroke_data$stroke, "AVC")
 
+#################################################################################
+# MEDIDAS DE RESUMO
+
+## Idade
+summary(stroke_data$age)
+
+## Glicose no Sangue
+summary(stroke_data$avg_glucose_level)
+
+## IMC
+summary(stroke_data$imc[stroke_data$imc != -1])
