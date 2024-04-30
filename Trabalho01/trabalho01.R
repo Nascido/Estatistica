@@ -72,8 +72,6 @@ two_var_table <- function(var1, var2, name1, name2){
 stroke_var_table <- function(data_var, name_var){
   tabela = two_var_table(data_var, stroke_data$stroke, name_var, "AVC")
   
-  print(tabela)
-  
   return(tabela)
 }
 
@@ -259,3 +257,4 @@ ggplot(stroke_data, aes(x=stroke)) +
         axis.text.y = element_text(size = 20),
         axis.title.x = element_text(size = 20),
         axis.title.y = element_text(size = 20))
+
