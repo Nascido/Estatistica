@@ -2,6 +2,7 @@
 library(readr)
 library(doBy)
 library(dplyr)
+library(ggplot2)
 
 ################################################################################
 ##00 Tratamento de Dados #######################################################
@@ -34,7 +35,6 @@ stroke_data = stroke_data %>%
 
 stroke_data = select(stroke_data, -bmi)
 
-
 ################################################################################
 ##01 Análise de Dados ##########################################################
 ################################################################################
@@ -63,6 +63,8 @@ two_var_table <- function(var1, var2, name1, name2){
   tabela = tabela[,-c(4,5)]
   colnames(tabela) <- c(name1,name2,"Frequencia","Porcentagem")
   
+  print(tabela)
+  
   return(tabela)
 }
 
@@ -70,43 +72,8 @@ two_var_table <- function(var1, var2, name1, name2){
 stroke_var_table <- function(data_var, name_var){
   tabela = two_var_table(data_var, stroke_data$stroke, name_var, "AVC")
   
-  print(tabela)
-  
   return(tabela)
 }
-
-
-################################################################################
-# TABELAS PARA VARIAVEIS QUALITATIVAS:
-
-## Gênero:
-tabela_gender = one_var_table(stroke_data$gender, "Gênero")
-tabela_gender_stroke = stroke_var_table(stroke_data$gender, "Gênero")
-write.table(tabela_gender,"tabela_gender.csv", sep=";", dec=",", row.names=TRUE)
-write.table(tabela_gender_stroke,"tabela_gender_stroke.csv", sep=";", dec=",", row.names=TRUE)
-
-## Hipertensão
-tabela_hypertension = one_var_table(stroke_data$hypertension, "Hipertensão")
-tabela_hypertension_stroke = stroke_var_table(stroke_data$hypertension, "Hipertensão")
-write.table(tabela_hypertension,"tabela_hypertension.csv", sep=";", dec=",", row.names=TRUE)
-write.table(tabela_hypertension_stroke,"tabela_hypertension_stroke.csv", sep=";", dec=",", row.names=TRUE)
-
-## Problema no Coração
-tabela_heart = one_var_table(stroke_data$heart_disease, "Cardiaco")
-tabela_heart_stroke = stroke_var_table(stroke_data$heart_disease, "Cardiaco")
-write.table(tabela_heart,"tabela_heart.csv", sep=";", dec=",", row.names=TRUE)
-write.table(tabela_heart_stroke,"tabela_heart_stroke.csv", sep=";", dec=",", row.names=TRUE)
-
-## Fumante
-tabela_smoke = one_var_table(stroke_data$smoking_status, "Cigarro")
-tabela_smoke_stroke = stroke_var_table(stroke_data$smoking_status, "Cigarro")
-write.table(tabela_smoke,"tabela_smoke.csv", sep=";", dec=",", row.names=TRUE)
-write.table(tabela_smoke_stroke,"tabela_smoke_stroke.csv", sep=";", dec=",", row.names=TRUE)
-
-
-## AVC
-tabela_stroke = one_var_table(stroke_data$stroke, "AVC")
-write.table(tabela_stroke,"tabela_stroke.csv", sep=";", dec=",", row.names=TRUE)
 
 #################################################################################
 # MEDIDAS DE RESUMO PARA QUANTITATIVAS:
@@ -114,97 +81,180 @@ write.table(tabela_stroke,"tabela_stroke.csv", sep=";", dec=",", row.names=TRUE)
 ## Idade
 summary(stroke_data$age)
 
-## Glicose no Sangue
+## Nível médio de glicose
 summary(stroke_data$avg_glucose_level)
 
 ## IMC
 summary(stroke_data$imc[stroke_data$imc != -1])
 
+################################################################################
+# TABELAS PARA VARIAVEIS QUALITATIVAS:
+
+## Gênero:
+tabela_gender = one_var_table(stroke_data$gender, "Gênero")
+tabela_gender_stroke = stroke_var_table(stroke_data$gender, "Gênero")
+
+## Hipertensão
+tabela_hypertension = one_var_table(stroke_data$hypertension, "Hipertensão")
+tabela_hypertension_stroke = stroke_var_table(stroke_data$hypertension, "Hipertensão")
+
+## Problema no Coração
+tabela_heart = one_var_table(stroke_data$heart_disease, "Cardiaco")
+tabela_heart_stroke = stroke_var_table(stroke_data$heart_disease, "Cardiaco")
+
+## Histórico de fumante
+tabela_smoke = one_var_table(stroke_data$smoking_status, "Cigarro")
+tabela_smoke_stroke = stroke_var_table(stroke_data$smoking_status, "Cigarro")
+
+## AVC
+tabela_stroke = one_var_table(stroke_data$stroke, "AVC")
+
+#################################################################################
+# ALTERAÇÃO DO TAMANHO DA FONTE DOS GRÁFICOS DE CAIXA
+par(cex.axis = 1.7, cex.lab = 1.7)
+
 #################################################################################
 # GRAFICOS DAS VARIAVEIS DE ESTUDO:
-
-## Gênero
-library(ggplot2)
-ggplot(stroke_data, aes(x=gender)) +
-  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
-  labs(x="Gênero", y="Contagem")
-
-ggplot(stroke_data, aes(x=gender, fill=stroke)) + 
-  geom_bar(position="fill") +
-  xlab("Gênero") +
-  ylab("Porcentagem")
 
 ## Idade
 ggplot(stroke_data, aes(x=age)) +
   geom_histogram(binwidth=1, alpha=0.7,  color="blue", fill="lightblue") + 
-  labs(x="Idade", y="Contagem")
+  labs(x="Idade (anos)", y="Contagem") +
+  theme(axis.text.x = element_text(size = 20),
+      axis.text.y = element_text(size = 20),
+      axis.title.x = element_text(size = 20),
+      axis.title.y = element_text(size = 20))
 
 boxplot(age~stroke,
         data = stroke_data,
-        main = "AVC em relação a idade",
-        xlab = "Idade",
-        ylab = "AVC",
+        xlab = "AVC",
+        ylab = "Idade (anos)",
         col  = c("lightblue","lightyellow"),
         ylim = c(0,100))
-
-## Hipertensão
-ggplot(stroke_data, aes(x=hypertension)) +
-  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
-  labs(x="Tem hipertensão", y="Contagem")
-
-ggplot(stroke_data, aes(x=hypertension, fill=stroke)) + 
-  geom_bar(position="fill") +
-  xlab("Hipertensão") +
-  ylab("Porcentagem")
-
-## Problema de coração
-ggplot(stroke_data, aes(x=heart_disease)) +
-  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
-  labs(x="Tem problema de coração", y="Contagem")
-
-ggplot(stroke_data, aes(x=heart_disease, fill=stroke)) + 
-  geom_bar(position="fill") +
-  xlab("Problema de coração") +
-  ylab("Porcentagem") 
 
 ## Nível médio de glicose
 ggplot(stroke_data, aes(x=avg_glucose_level)) +
   geom_histogram(binwidth=5, alpha=0.7,  color="blue", fill="lightblue") + 
-  labs(x="Nível de glicose médio", y="Contagem")
+  labs(x="Nível de glicose médio (mg/dL)", y="Contagem") + 
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20))
 
 boxplot(avg_glucose_level~stroke,
         data = stroke_data,
-        main = "AVC em relação ao nível de médio de glicose",
-        xlab = "Nível médio de glicose ",
-        ylab = "AVC",
+        xlab = "AVC",
+        ylab = "Nível médio de glicose (mg/dL)",
         col  = c("lightblue","lightyellow"),
         ylim = c(0,300))
-
-## Status de fumante
-ggplot(stroke_data, aes(x=smoking_status)) +
-  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
-  labs(x="Status de fumante", y="Contagem")
-
-ggplot(stroke_data, aes(x=smoking_status, fill=stroke)) + 
-  geom_bar(position="fill") +
-  xlab("Status de fumante") +
-  ylab("Porcentagem")
-
-## AVC
-ggplot(stroke_data, aes(x=stroke)) +
-  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
-  labs(x="Teve AVC", y="Contagem")
 
 ## IMC
 ggplot(stroke_data, aes(x=imc)) +
   geom_histogram(binwidth=1, alpha=0.7,  color="blue", fill="lightblue") + 
-  labs(x="IMC", y="Contagem")
+  labs(x="IMC (kg/m2)", y="Contagem") + 
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20))
 
 stroke_data_filtered = stroke_data[stroke_data$imc != -1,]
 boxplot(imc~stroke,
         data = stroke_data_filtered,
-        main = "AVC em relação ao IMC",
-        xlab = "Nível médio de glicose ",
-        ylab = "IMC",
+        xlab = "AVC",
+        ylab = "IMC (kg/m2)",
         col  = c("lightblue","lightyellow"),
         ylim = c(0,100))
+
+## Gênero
+ggplot(stroke_data, aes(x=gender)) +
+  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
+  labs(x="Gênero", y="Contagem") + 
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20))
+
+ggplot(stroke_data, aes(x=gender, fill=stroke)) + 
+  geom_bar(position="fill") +
+  xlab("Gênero") +
+  ylab("Porcentagem") + 
+  labs(fill="AVC") +
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20),
+        legend.text = element_text(size = 20),
+        legend.title = element_text(size = 20))
+
+## Hipertensão
+ggplot(stroke_data, aes(x=hypertension)) +
+  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
+  labs(x="Tem hipertensão", y="Contagem") + 
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20))
+
+ggplot(stroke_data, aes(x=hypertension, fill=stroke)) + 
+  geom_bar(position="fill") +
+  xlab("Hipertensão") +
+  ylab("Porcentagem") + 
+  labs(fill="AVC") +
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20),
+        legend.text = element_text(size = 20),
+        legend.title = element_text(size = 20))
+
+## Problema de coração
+ggplot(stroke_data, aes(x=heart_disease)) +
+  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
+  labs(x="Tem problema de coração", y="Contagem") + 
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20))
+
+ggplot(stroke_data, aes(x=heart_disease, fill=stroke)) + 
+  geom_bar(position="fill") +
+  xlab("Problema de coração") +
+  ylab("Porcentagem") + 
+  labs(fill="AVC") +
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20),
+        legend.text = element_text(size = 20),
+        legend.title = element_text(size = 20))
+
+## Histórico de fumante
+ggplot(stroke_data, aes(x=smoking_status)) +
+  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
+  labs(x="Histórico de fumante", y="Contagem") + 
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20))
+
+ggplot(stroke_data, aes(x=smoking_status, fill=stroke)) + 
+  geom_bar(position="fill") +
+  xlab("Histórico de fumante") +
+  ylab("Porcentagem") + 
+  labs(fill="AVC") +
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20),
+        legend.text = element_text(size = 20),
+        legend.title = element_text(size = 20))
+
+## AVC
+ggplot(stroke_data, aes(x=stroke)) +
+  geom_bar(fill="lightblue", color="blue", alpha=0.8) +
+  labs(x="Teve AVC", y="Contagem") + 
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20))
+
